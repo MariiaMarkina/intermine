@@ -5,7 +5,7 @@ pipeline {
         
       VERSION = VersionNumber([
         versionNumberString : '${BUILD_YEAR}.${BUILD_MONTH}.${BUILD_ID}',
-        projectStartDate : '2021-10-1'
+        // projectStartDate : '2021-10-1'
       ]);
            }
     
@@ -14,6 +14,7 @@ pipeline {
         stage('Version control') {
             steps {     
               sh 'echo Version is 1."$VERSION"'
+              sh 'echo  1."$VERSION" > /home/ubuntu/appversion.txt'
               }
         }
         
@@ -94,9 +95,7 @@ pipeline {
                   remote.user = userName
                   remote.identityFile = keyFile
                   sshCommand remote: remote, command: '[ -f "/home/ubuntu/appversion.txt" ] &&   echo "file for versions already exists" || touch /home/ubuntu/appversion.txt" '
-                  sshCommand remote: remote, command: 'echo 1.${BUILD_DATE_FORMATTED, "yy.MM.dd"} > /home/ubuntu/appversion.txt'
-                  sshCommand remote: remote, command: 'cp -R /home/ubuntu/intermine/testmine/webapp/build/serverBaseDir_tomcat8/webapps/intermine-demo /opt/tomcat/apache-tomcat-8.5.57/webapps/'
-                  sshCommand remote: remote, command: 'sudo /opt/tomcat/apache-tomcat-8.5.57/bin/startup.sh'
+                  sshPut remote: remote, from: '/home/ubuntu/appversion.txt', into: '/home/ubuntu/appversion.txt'
                   
                 }
               }
