@@ -13,8 +13,8 @@ pipeline {
         stage('Version control') {
             steps {     
               sh 'echo Version is 1."$VERSION"'
-              sh '[ -f "/appversion.txt" ] &&   echo "file for versions already exists" || touch "/appversion.txt" '
-              sh 'echo  1."$VERSION" > /appversion.txt'
+              sh '[ -f "./appversion.txt" ] &&   echo "file for versions already exists" || touch "./appversion.txt" '
+              sh 'echo  1."$VERSION" > ./appversion.txt'
               }
         }
         
@@ -95,7 +95,7 @@ pipeline {
                   remote.user = userName
                   remote.identityFile = keyFile
                   sshCommand remote: remote, command: '[ -f "/home/ubuntu/appversion.txt" ] &&   echo "file for versions already exists" || touch /home/ubuntu/appversion.txt" '
-                  sshPut remote: remote, from: '/appversion.txt', into: '/home/ubuntu/appversion.txt'
+                  sshPut remote: remote, from: './appversion.txt', into: '/home/ubuntu/appversion.txt'
                   
                 }
               }
