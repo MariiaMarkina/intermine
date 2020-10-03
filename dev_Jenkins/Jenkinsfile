@@ -21,7 +21,7 @@ pipeline {
                   remote.allowAnyHosts = true
                   remote.user = userName
                   remote.identityFile = keyFile
-                  sshCommand remote: remote, command: 'echo Version is ${BUILD_DATE_FORMATTED, "yy.MM.dd"}'
+                  sshCommand remote: remote, command: 'echo Version is 1.${BUILD_DATE_FORMATTED, "yy.MM.dd"}'
                   sshCommand remote: remote, command: '/opt/tomcat/apache-tomcat-8.5.57/bin/shutdown.sh'
                   sshCommand remote: remote, command: '[ -d "/home/ubuntu/.m2" ] &&   sudo rm -r /home/ubuntu/intermine  || echo "directory .m2 does not exist yet" ' 
                   sshCommand remote: remote, command: '[ -d "/home/ubuntu/.intermine" ] &&   sudo rm -r /home/ubuntu/intermine  || echo "directory .intermine does not exist yet" '
@@ -29,8 +29,7 @@ pipeline {
                   sshCommand remote: remote, command: '[ -d "/home/ubuntu/intermine" ] &&   sudo rm -r /home/ubuntu/intermine  || echo "directory intermine does not exist yet" ' 
                   sshCommand remote: remote, command: '[ -n  $("lsof -i :8080 | grep java") ] && killall java || echo "Java not running yet"'
                   sshCommand remote: remote, command: "sudo git clone --branch master https://github.com/MariiaMarkina/intermine_final /home/ubuntu/intermine"
-                  sshCommand remote: remote, command: 'export GRADLE_USER_HOME="/home/ubuntu"'
-                  ${BUILD_DATE_FORMATTED, "yyyy-MM-dd"} 
+                  sshCommand remote: remote, command: 'export GRADLE_USER_HOME="/home/ubuntu"' 
                   sshCommand remote: remote, command: '/home/ubuntu/intermine/testmine/setup.sh'
                   //sshCommand remote: remote, command: 'lsof -i :8080 | grep "java" | awk "{print $2}" | xargs kill'
                  }
@@ -84,7 +83,7 @@ pipeline {
                   remote.user = userName
                   remote.identityFile = keyFile
                   sshCommand remote: remote, command: '[ -f "/home/ubuntu/appversion.txt" ] &&   echo "file for versions already exists" || touch /home/ubuntu/appversion.txt" '
-                  sshCommand remote: remote, command: 'echo ${BUILD_DATE_FORMATTED, "yy.MM.dd"} > /home/ubuntu/appversion.txt'
+                  sshCommand remote: remote, command: 'echo 1.${BUILD_DATE_FORMATTED, "yy.MM.dd"} > /home/ubuntu/appversion.txt'
                   sshCommand remote: remote, command: 'cp -R /home/ubuntu/intermine/testmine/webapp/build/serverBaseDir_tomcat8/webapps/intermine-demo /opt/tomcat/apache-tomcat-8.5.57/webapps/'
                   sshCommand remote: remote, command: 'sudo /opt/tomcat/apache-tomcat-8.5.57/bin/startup.sh'
                   
