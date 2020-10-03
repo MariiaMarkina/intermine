@@ -2,13 +2,18 @@ pipeline {
     agent any
     environment {
       DEV_IP = sh(script: 'cat /usr/share/app_dev_ip.txt', , returnStdout: true).trim()
+        
+      VERSION = VersionNumber([
+        versionNumberString : '${BUILD_YEAR}.${BUILD_MONTH}.${BUILD_ID}',
+        projectStartDate : '2021-10-1'
+      ]);
            }
     
     stages {
     
         stage('Version control') {
             steps {     
-              sh "echo Version is 1.'${BUILD_YEAR}.${BUILD_MONTH}.${BUILD_DAY}'"
+              sh 'echo Version is 1."$VERSION"'
               }
         }
         
