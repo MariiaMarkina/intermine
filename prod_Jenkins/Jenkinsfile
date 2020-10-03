@@ -80,7 +80,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'sleep 20'
-                sh 'wget -S "$DEV_IP:8070/intermine-demo"'
+                sh 'wget -S "$PROD_IP:8070/intermine-demo"'
               }
         }
         
