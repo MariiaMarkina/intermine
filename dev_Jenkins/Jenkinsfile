@@ -17,7 +17,7 @@ pipeline {
             options {
                 timeout(time: 11, unit: "MINUTES")
             }
-            steps
+            steps {
              catchError(buildResult: 'SUCCESS', stageResult: 'ABORTED') {
               withCredentials([sshUserPrivateKey(credentialsId: 'SSH_ubuntu', keyFileVariable: 'keyfile', usernameVariable: 'userName')]) {
                 script {
