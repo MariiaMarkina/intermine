@@ -94,7 +94,7 @@ pipeline {
                   remote.allowAnyHosts = true
                   remote.user = userName
                   remote.identityFile = keyFile
-                  sshCommand remote: remote, command: '[ -f "/home/ubuntu/appversion.txt" ] &&   echo "file for versions already exists" || touch /home/ubuntu/appversion.txt" '
+                  sshCommand remote: remote, command: '[ -f "/home/ubuntu/appversion.txt" ] &&   echo "file for versions already exists" || touch "/home/ubuntu/appversion.txt" '
                   sshPut remote: remote, from: './appversion.txt', into: '/home/ubuntu/appversion.txt'
                   
                 }
