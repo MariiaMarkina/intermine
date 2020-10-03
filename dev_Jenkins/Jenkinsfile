@@ -84,7 +84,7 @@ pipeline {
         }
         
         
-        stage('Write version to /home/ubuntu/appversion.txt on instance') {
+        stage('Write version to file on instancee') {
             steps {
               withCredentials([sshUserPrivateKey(credentialsId: 'SSH_ubuntu', keyFileVariable: 'keyfile', usernameVariable: 'userName')]) {
                 script {
