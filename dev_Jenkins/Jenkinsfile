@@ -8,7 +8,7 @@ pipeline {
     
         stage('Version control') {
             steps {     
-              sh 'echo Version is 1.${BUILD_YEAR, XXXX}.${BUILD_MONTH, XX}.${BUILD_DAY, XX}'
+              sh "echo Version is 1.${BUILD_YEAR, XXXX}.${BUILD_MONTH, XX}.${BUILD_DAY, XX}"
               }
         }
         
