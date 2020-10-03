@@ -4,7 +4,7 @@ pipeline {
       DEV_IP = sh(script: 'cat /usr/share/app_dev_ip.txt', , returnStdout: true).trim()
         
       VERSION = VersionNumber([
-          versionNumberString : '${BUILD_YEAR, XX}.${BUILD_MONTH}.${BUILD_DAY}.${BUILD_ID}',
+          versionNumberString : '${BUILD_YEAR}.${BUILD_MONTH}.${BUILD_DAY}',
       ]);
            }
     
@@ -13,8 +13,8 @@ pipeline {
         stage('Version control') {
             steps {     
               sh 'echo Version is 1."$VERSION"'
-              sh '[ -f "/home/ubuntu/appversion.txt" ] &&   echo "file for versions already exists" || touch "/home/ubuntu/appversion.txt" '
-              sh 'echo  1."$VERSION" > /home/ubuntu/appversion.txt'
+              sh '[ -f "/appversion.txt" ] &&   echo "file for versions already exists" || touch "/appversion.txt" '
+              sh 'echo  1."$VERSION" > /appversion.txt'
               }
         }
         
@@ -95,7 +95,7 @@ pipeline {
                   remote.user = userName
                   remote.identityFile = keyFile
                   sshCommand remote: remote, command: '[ -f "/home/ubuntu/appversion.txt" ] &&   echo "file for versions already exists" || touch /home/ubuntu/appversion.txt" '
-                  sshPut remote: remote, from: '/home/ubuntu/appversion.txt', into: '/home/ubuntu/appversion.txt'
+                  sshPut remote: remote, from: '/appversion.txt', into: '/home/ubuntu/appversion.txt'
                   
                 }
               }
