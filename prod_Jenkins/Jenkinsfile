@@ -1,11 +1,13 @@
 pipeline {
     agent any
     environment {
-      DEV_IP = sh(script: 'cat /usr/share/app_dev_ip.txt', , returnStdout: true).trim()
-           }
+      PROD_IP = sh(script: 'cat /usr/share/app_prod_ip.txt', , returnStdout: true).trim()
       VERSION_PROD = VersionNumber([
           versionNumberString : '${BUILD_YEAR}.${BUILD_MONTH}.${BUILD_DAY}',
-      ]);
+      ]); 
+        
+           }
+
     stages {
     
         stage('Version control') {
@@ -26,7 +28,7 @@ pipeline {
                 script {
                   def remote = [:]
                   remote.name = 'node'
-                  remote.host = "$DEV_IP"
+                  remote.host = "$PROD_IP"
                   remote.allowAnyHosts = true
                   remote.user = userName
                   remote.identityFile = keyFile
@@ -55,7 +57,7 @@ pipeline {
                 script {
                   def remote = [:]
                   remote.name = 'node'
-                  remote.host = "$DEV_IP"
+                  remote.host = "$PROD_IP"
                   remote.allowAnyHosts = true
                   remote.user = userName
                   remote.identityFile = keyFile
@@ -91,7 +93,7 @@ pipeline {
                 script {
                   def remote = [:]
                   remote.name = 'node'
-                  remote.host = "$DEV_IP"
+                  remote.host = "$PROD_IP"
                   remote.allowAnyHosts = true
                   remote.user = userName
                   remote.identityFile = keyFile
