@@ -21,7 +21,7 @@ pipeline {
                   remote.allowAnyHosts = true
                   remote.user = userName
                   remote.identityFile = keyFile
-                  sshCommand remote: remote, command: 'echo Version is 1.${BUILD_DATE_FORMATTED, "yy.MM.dd"}'
+                  sshCommand remote: remote, command: 'echo Version is 1.${BUILD_YEAR, XXXX}.${BUILD_MONTH, XX}.${BUILD_DAY, XX}'
                   sshCommand remote: remote, command: '/opt/tomcat/apache-tomcat-8.5.57/bin/shutdown.sh'
                   sshCommand remote: remote, command: '[ -d "/home/ubuntu/.m2" ] &&   sudo rm -r /home/ubuntu/intermine  || echo "directory .m2 does not exist yet" ' 
                   sshCommand remote: remote, command: '[ -d "/home/ubuntu/.intermine" ] &&   sudo rm -r /home/ubuntu/intermine  || echo "directory .intermine does not exist yet" '
