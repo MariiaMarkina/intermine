@@ -6,13 +6,18 @@ pipeline {
     
     stages {
     
+        stage('Version control') {
+            steps {     
+              sh 'echo Version is 1.${BUILD_YEAR, XXXX}.${BUILD_MONTH, XX}.${BUILD_DAY, XX}'
+              }
+        }
+        
     
         stage('Build') {
             options {
                 timeout(time: 11, unit: "MINUTES")
             }
-            steps {
-             sh 'echo Version is 1.${BUILD_YEAR, XXXX}.${BUILD_MONTH, XX}.${BUILD_DAY, XX}'
+            steps
              catchError(buildResult: 'SUCCESS', stageResult: 'ABORTED') {
               withCredentials([sshUserPrivateKey(credentialsId: 'SSH_ubuntu', keyFileVariable: 'keyfile', usernameVariable: 'userName')]) {
                 script {
