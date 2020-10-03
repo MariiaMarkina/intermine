@@ -4,7 +4,7 @@ pipeline {
       DEV_IP = sh(script: 'cat /usr/share/app_dev_ip.txt', , returnStdout: true).trim()
         
       VERSION = VersionNumber([
-        versionNumberString : '${BUILD_YEAR}.${BUILD_MONTH}.${BUILD_ID}',
+          versionNumberString : '${BUILD_YEAR}.${BUILD_MONTH}.${BUILD_DAY}.${BUILD_ID}',
         // projectStartDate : '2021-10-1'
       ]);
            }
@@ -14,6 +14,7 @@ pipeline {
         stage('Version control') {
             steps {     
               sh 'echo Version is 1."$VERSION"'
+              sh '[ -f "/home/ubuntu/appversion.txt" ] &&   echo "file for versions already exists" || touch /home/ubuntu/appversion.txt" '
               sh 'echo  1."$VERSION" > /home/ubuntu/appversion.txt'
               }
         }
