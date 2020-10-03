@@ -3,10 +3,19 @@ pipeline {
     environment {
       DEV_IP = sh(script: 'cat /usr/share/app_dev_ip.txt', , returnStdout: true).trim()
            }
-    
+      VERSION_PROD = VersionNumber([
+          versionNumberString : '${BUILD_YEAR}.${BUILD_MONTH}.${BUILD_DAY}',
+      ]);
     stages {
     
-    
+        stage('Version control') {
+          steps {     
+              sh 'echo Version is 1."$VERSION_PROD"'
+              sh '[ -f "./appversionprod.txt" ] &&   echo "file for versions already exists" || touch "./appversionprod.txt" '
+              sh 'echo  1."$VERSION_PROD" > ./appversionprod.txt'
+              }
+        }
+        
         stage('Build') {
             options {
                 timeout(time: 11, unit: "MINUTES")
@@ -76,7 +85,27 @@ pipeline {
         
 
         
+        stage('Write version to file on instance') {
+            steps {
+              withCredentials([sshUserPrivateKey(credentialsId: 'SSH_ubuntu', keyFileVariable: 'keyfile', usernameVariable: 'userName')]) {
+                script {
+                  def remote = [:]
+                  remote.name = 'node'
+                  remote.host = "$DEV_IP"
+                  remote.allowAnyHosts = true
+                  remote.user = userName
+                  remote.identityFile = keyFile
+                  sshCommand remote: remote, command: '[ -f "/home/ubuntu/appversionprod.txt" ] &&   echo "file for versions already exists" || touch "/home/ubuntu/appversionprod.txt" '
+                  sshPut remote: remote, from: './appversionprod.txt', into: '/home/ubuntu/appversionprod.txt'
+                  
+                }
+              }
+             
+            }
+        }
+        
        
+        
         
         
     }
