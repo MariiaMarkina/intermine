@@ -11,7 +11,13 @@ pipeline {
     stages {
     
         stage('Version control') {
-          steps {     
+          steps { 
+              script {
+                if (params.apply_plan != 'yes') {
+                    input message: 'Deploy to prod?'
+                }
+              }
+              
               sh 'echo Version is 1."$VERSION_PROD"'
               sh '[ -f "./appversionprod.txt" ] &&   echo "file for versions already exists" || touch "./appversionprod.txt" '
               sh 'echo  1."$VERSION_PROD" > ./appversionprod.txt'
