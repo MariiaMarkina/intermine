@@ -33,7 +33,7 @@ pipeline {
                   remote.allowAnyHosts = true
                   remote.user = userName
                   remote.identityFile = keyFile
-                  sshCommand remote: remote, command: '/opt/tomcat/apache-tomcat-8.5.57/bin/shutdown.sh'
+                  sshCommand remote: remote, command: '/opt/tomcat/apache-tomcat-8.5.58/bin/shutdown.sh'
                   sshCommand remote: remote, command: '[ -d "/home/ubuntu/.m2" ] &&   sudo rm -r /home/ubuntu/intermine  || echo "directory .m2 does not exist yet" ' 
                   sshCommand remote: remote, command: '[ -d "/home/ubuntu/.intermine" ] &&   sudo rm -r /home/ubuntu/intermine  || echo "directory .intermine does not exist yet" '
                   sshCommand remote: remote, command: '[ -d "/home/ubuntu/.gradle" ] &&   sudo rm -r /home/ubuntu/intermine  || echo "directory .gradle does not exist yet" '
@@ -63,10 +63,10 @@ pipeline {
                   remote.user = userName
                   remote.identityFile = keyFile
                   sshCommand remote: remote, command: 'killall java'
-                  sshCommand remote: remote, command: 'cp -R /home/ubuntu/intermine/testmine/webapp/build/serverBaseDir_tomcat8/work/Tomcat/localhost/intermine-demo /opt/tomcat/apache-tomcat-8.5.57/webapps/'
-                  sshCommand remote: remote, command: 'cp -R /home/ubuntu/intermine/testmine/webapp/build/serverBaseDir_tomcat8/webapps/intermine-demo /opt/tomcat/apache-tomcat-8.5.57/webapps/'
-                  sshCommand remote: remote, command: 'sudo /opt/tomcat/apache-tomcat-8.5.57/bin/startup.sh'
-                  //sshCommand remote: remote, command: 'cp -R /opt/tomcat/apache-tomcat-8.5.57/webapps/intermine-demo /home/ubuntu/webapps/intermine-demo'
+                  sshCommand remote: remote, command: 'cp -R /home/ubuntu/intermine/testmine/webapp/build/serverBaseDir_tomcat8/work/Tomcat/localhost/intermine-demo /opt/tomcat/apache-tomcat-8.5.58/webapps/'
+                  sshCommand remote: remote, command: 'cp -R /home/ubuntu/intermine/testmine/webapp/build/serverBaseDir_tomcat8/webapps/intermine-demo /opt/tomcat/apache-tomcat-8.5.58/webapps/'
+                  sshCommand remote: remote, command: 'sudo /opt/tomcat/apache-tomcat-8.5.58/bin/startup.sh'
+                  //sshCommand remote: remote, command: 'cp -R /opt/tomcat/apache-tomcat-8.5.58/webapps/intermine-demo /home/ubuntu/webapps/intermine-demo'
                   //sshCommand remote: remote, command: 'tar -cvf /home/ubuntu/myarchive.tar /home/ubuntu/webapps/intermine-demo'
                  // sshGet remote: remote, from: '/home/ubuntu/myarchive.tar', into: './myarchive.tar', override: true
                 }
